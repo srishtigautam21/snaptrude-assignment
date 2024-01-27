@@ -32,4 +32,4 @@ This project has been made using React.js, mapbox, react-map-gl and bablyon.js
 
 2. Using Bablyon.js tried converting the png image of map to 3d image but I was not able to find any resource or package to do that. Thats why left the code commented and I wasn't able to fully understand the working of bablyon.
 
-### [Live link](https://kanban-boarrd.netlify.app/)
+### [Live link](https://snaptrude-assignment-three.vercel.app/)

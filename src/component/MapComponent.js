@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-
 import { toPng } from "html-to-image";
 import Map, { Marker } from "react-map-gl";
 import Geocoder from "./Geocoder.js";
@@ -10,7 +9,16 @@ import "./MapComponent.css";
 import "@watergis/mapbox-gl-export/css/styles.css";
 import BablyonComponent from "./BablyonComponent.js";
 
-const MapComponent = () => {
+const MapComponent = (props) => {
+  const {
+    antialias,
+    engineOptions,
+    adaptToDeviceRatio,
+    sceneOptions,
+    onRender,
+    onSceneReady,
+    ...rest
+  } = props;
   const [viewState, setViewState] = useState({
     longitude: -100,
     latitude: 40,
@@ -24,7 +32,7 @@ const MapComponent = () => {
     toPng(mapRef.current, { cacheBust: false })
       .then((dataUrl) => {
         console.log(dataUrl);
-        let img = new Image();
+        let img = new Image(500, 500);
         img.src = dataUrl;
         // document.body.appendChild(img);
         setImage(img.src);
@@ -33,6 +41,8 @@ const MapComponent = () => {
         console.error("oops, something went wrong!", error);
       });
   };
+  // Was trying to use MapboxExportControl but there has been no
+  //component made for same to be used with react-map-gl
 
   //   const map = new mapboxgl.Map();
 
@@ -59,17 +69,7 @@ const MapComponent = () => {
   return (
     <>
       <div style={{ height: "100vh", width: "100%" }} ref={mapRef}>
-        {/* <ReactMapGL */}
-
-        {/* <img
-          src={image}
-          alt='Captured Map'
-          className='map-image'
-          //   style={{ width: "200px", height: "200px" }}
-        /> */}
-
         <Map
-          // ref={mapRef}
           {...viewState}
           mapboxAccessToken='pk.eyJ1Ijoic3Jpc2h0aS1nYXV0YW0iLCJhIjoiY2xydWh4M29xMGZ5bTJrbmFlNXJ1dWQ0dSJ9.rSmq3TK0NXSfUZD0yLONVw'
           onMove={(evt) => setViewState(evt.viewState)}
@@ -86,13 +86,24 @@ const MapComponent = () => {
           />
           <Geocoder viewState={viewState} setViewState={setViewState} />
         </Map>
-        {/* onClick={exportMapImage} */}
+
         <button className='capture-btn' onClick={htmlToImageConvert}>
           Capture Image
         </button>
-        {/* <img src={image} alt='map' className='map-image' /> */}
-        <div style={{ backgroundColor: "yellow" }}>
-          {image && <BablyonComponent image={image} />}
+
+        <div>
+          {image && (
+            <>
+              <img src={image} alt='map' className='map-image' />
+              <BablyonComponent
+                image={image}
+                antialias
+                onSceneReady={onSceneReady}
+                onRender={onRender}
+                id='my-canvas'
+              />
+            </>
+          )}
         </div>
       </div>
     </>

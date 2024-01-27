@@ -1,11 +1,13 @@
+import "./App.css";
 
-import './App.css';
-import MapComponent from './component/MapComponent';
+import MapComponent from "./component/MapComponent";
 
 function App() {
   return (
-    <div >
-    <MapComponent />
+    <div style={{ position: "relative" }}>
+      {/* <button className='capture-btn'>Capture Image</button> */}
+
+      <MapComponent />
     </div>
   );
 }

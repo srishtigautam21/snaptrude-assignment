@@ -7,7 +7,7 @@ import "./MapComponent.css";
 // import mapboxgl from "mapbox-gl";
 // import { MapboxExportControl } from "@watergis/mapbox-gl-export";
 import "@watergis/mapbox-gl-export/css/styles.css";
-import BablyonComponent from "./BablyonComponent.js";
+// import BablyonComponent from "./BablyonComponent.js";
 
 const MapComponent = (props) => {
   const {
@@ -31,10 +31,8 @@ const MapComponent = (props) => {
   const htmlToImageConvert = () => {
     toPng(mapRef.current, { cacheBust: false })
       .then((dataUrl) => {
-        console.log(dataUrl);
         let img = new Image(500, 500);
         img.src = dataUrl;
-        // document.body.appendChild(img);
         setImage(img.src);
       })
       .catch((error) => {
@@ -95,13 +93,13 @@ const MapComponent = (props) => {
           {image && (
             <>
               <img src={image} alt='map' className='map-image' />
-              <BablyonComponent
+              {/* <BablyonComponent
                 image={image}
                 antialias
                 onSceneReady={onSceneReady}
                 onRender={onRender}
                 id='my-canvas'
-              />
+              /> */}
             </>
           )}
         </div>
